@@ -78,6 +78,9 @@
     </ApplicationDefinition>
     <Compile Include="Sample\Acs.cs" />
     <Compile Include="Sample\SerialPortMonitor.cs" />
+    <Compile Include="UI\WebsiteLinkButton.xaml.cs">
+      <DependentUpon>WebsiteLinkButton.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -90,6 +93,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UI\WebsiteLinkButton.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
