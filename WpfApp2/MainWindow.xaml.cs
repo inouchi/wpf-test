@@ -26,6 +26,7 @@ namespace WpfApp2
     /// </summary>
     public partial class MainWindow : Window
     {
+        private SerialPort port;
         private SerialPortMonitor sm;
 
         public MainWindow()
@@ -36,7 +37,7 @@ namespace WpfApp2
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             IntPtr mainWindowHandle = new WindowInteropHelper(this).Handle;
-            sm = new SerialPortMonitor(mainWindowHandle);
+            sm = new SerialPortMonitor(ref port, mainWindowHandle);
             sm.SerialPortStateChanged += UsbStateChanged;
         }
 
