@@ -37,15 +37,17 @@ namespace WpfApp2
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             IntPtr mainWindowHandle = new WindowInteropHelper(this).Handle;
-            sm = new SerialPortMonitor(ref port, mainWindowHandle);
+            sm = new SerialPortMonitor(port, mainWindowHandle);
             sm.SerialPortStateChanged += UsbStateChanged;
         }
 
-        private void UsbStateChanged(object sender, bool isUsbConnected)
+        private void UsbStateChanged(object sender, SerialPortEventArgs args)
         {
-            if (isUsbConnected)
+            if (args.IsConnected)
             {
                 MessageBox.Show("USB connected.");
+                port = args.Port;
+                Console.Write(port);
             }
             else
             {

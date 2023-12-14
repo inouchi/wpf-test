@@ -19,9 +19,9 @@ namespace WpfApp2.Sample
         private SerialPort port;
         private HwndSource hwndSource;
 
-        public event EventHandler<bool> SerialPortStateChanged;
+        public event EventHandler<SerialPortEventArgs> SerialPortStateChanged;
 
-        public SerialPortMonitor(ref SerialPort port, IntPtr hwnd)
+        public SerialPortMonitor(SerialPort port, IntPtr hwnd)
         {
             if (hwnd == IntPtr.Zero)
             {
@@ -29,6 +29,7 @@ namespace WpfApp2.Sample
             }
             hwndSource = HwndSource.FromHwnd(hwnd);
             hwndSource.AddHook(WndProc);
+            this.port = port;
         }
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
@@ -46,7 +47,7 @@ namespace WpfApp2.Sample
                 if (port == null)
                 {
                     port = new SerialPort("COM1");
-                    SerialPortStateChanged.Invoke(this, true);
+                    SerialPortStateChanged.Invoke(this, new SerialPortEventArgs(true, port));
                 }
             }
 
@@ -63,7 +64,7 @@ namespace WpfApp2.Sample
                     {
                         port.Close();
                         port = null;
-                        SerialPortStateChanged.Invoke(this, false);
+                        SerialPortStateChanged.Invoke(this, new SerialPortEventArgs(false, port));
                     }
                 }
             }
