@@ -18,6 +18,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WpfApp2.Sample;
+using System.Management;
+using Wpf.Ui.Mvvm.Contracts;
+using Wpf.Ui.Mvvm.Services;
+using Wpf.Ui.Common;
 
 namespace WpfApp2
 {
@@ -41,6 +45,15 @@ namespace WpfApp2
             sm.SerialPortStateChanged += UsbStateChanged;
         }
 
+        private void CardAction_Click(object sender, RoutedEventArgs e)
+        {
+            RootSnackbar.Timeout = 3000;
+            var snackbarService = new SnackbarService();
+            snackbarService.SetSnackbarControl(RootSnackbar);
+            snackbarService.Show("本日はありがとうございます。\n1番 田中様\n○○号車");
+            
+        }
+
         private void UsbStateChanged(object sender, SerialPortEventArgs args)
         {
             if (args.IsConnected)
@@ -62,5 +75,6 @@ namespace WpfApp2
             var foo = port.IsOpen;
             MessageBox.Show("ok");
         }
+
     }
 }
